@@ -1,0 +1,39 @@
+SELECT name, cost, stock FROM products WHERE stock < 100;
+SELECT name, cost, stock FROM products WHERE stock > 150;
+SELECT SUM(cost) FROM orderline WHERE shipping_date BETWEEN '2022-01-01' AND '2022-01-19';
+SELECT COUNT(orderline_id) FROM orderline WHERE cost > 2.00;
+SELECT COUNT(orderline_id) FROM orderline WHERE cost < 3.00;
+SELECT AVG(cost) FROM orderline;
+SELECT AVG(cost) FROM orderline WHERE amount BETWEEN 5 AND 999;
+
+CREATE TABLE reviews (
+review_id INT auto_increment,
+fk_order_id INT NOT NULL,
+fk_customer_id INT NOT NULL,
+customer_first_name varchar(50) DEFAULT 'Anonymous',
+comments varchar(50) NOT NULL,
+primary key(review_id),
+foreign key(fk_order_id) references orders(order_id),
+foreign key(fk_customer_id) references customers(customer_id)
+);
+
+DROP TABLE reviews;
+
+CREATE TABLE reviews (
+review_id INT auto_increment,
+fk_order_id INT NOT NULL,
+fk_customer_id INT NOT NULL,
+customer_first_name varchar(50) DEFAULT 'Anonymous',
+comments varchar(50) DEFAULT 'This place is amazing!',
+primary key(review_id),
+foreign key(fk_order_id) references orders(order_id),
+foreign key(fk_customer_id) references customers(customer_id)
+);
+
+INSERT INTO reviews (fk_order_id, fk_customer_id, customer_first_name, comments) 
+VALUES (1, 5, 'Steve', 'Awful cakes from the 1970s'); 
+
+select * FROM reviews;  
+
+INSERT INTO reviews (fk_order_id, fk_customer_id, customer_first_name, comments) 
+VALUES (2, 5, '', ''), (3, 4, 'Stu', ''); 
